@@ -629,12 +629,10 @@ ___TEMPLATE_PARAMETERS___
 
 ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
-const makeInteger = require('makeInteger');
-
 return {
   type: 'snowplow',
   appId: data.appId,
-  platform: data.platform,
+  platform: data.platform === 'custom' ? data.customPlatform : data.platform,
   respectDoNotTrack: data.respectDoNotTrack,
   stateStorageStrategy: data.stateStorageStrategy,
   cookieDomain: data.cookieDomain !== 'auto' && data.cookieDomain,
@@ -672,7 +670,50 @@ return {
 
 ___TESTS___
 
-scenarios: []
+scenarios:
+- name: Variable returns expected object
+  code: "const expected = {\n  type: 'snowplow',\n  appId: mockData.appId,\n  platform:\
+    \ mockData.customPlatform,\n  respectDoNotTrack: mockData.respectDoNotTrack,\n\
+    \  stateStorageStrategy: mockData.stateStorageStrategy,\n  cookieDomain: false,\n\
+    \  discoverRootDomain: true,\n  cookieName: mockData.cookieName,\n  cookieLifetime:\
+    \ mockData.customCookieLifetime,\n  cookieSameSite: null,\n  cookieSecure: mockData.cookieSecure,\n\
+    \  maxLocalStorageQueueSize: mockData.maxLocalStorageQueueSize,\n  eventMethod:\
+    \ mockData.eventMethod,\n  encodeBase64: mockData.encodeBase64,\n  pageUnloadTimer:\
+    \ mockData.pageUnloadTimer,\n  forceSecureTracker: false,\n  forceUnsecureTracker:\
+    \ true,\n  bufferSize: mockData.bufferSize,\n  postPath: mockData.postPath,\n\
+    \  maxPostBytes: mockData.maxPostBytes,\n  contexts: {\n    webPage: mockData.webPage,\n\
+    \    performanceTiming: undefined,\n    gaCookies: undefined,\n    geolocation:\
+    \ mockData.geolocation,\n    optimizelyExperiments: undefined,\n    optimizelyStates:\
+    \ undefined,\n    optimizelyVariations: undefined,\n    optimizelyVisitor: undefined,\n\
+    \    optimizelyAudiences: undefined,\n    optimizelyDimensions: undefined,\n \
+    \   optimizelySummary: undefined,\n    optimizelyXSummary: undefined,\n    parrable:\
+    \ undefined\n  }\n};\n  \n// Call runCode to run the template's code.\nconst variableResult\
+    \ = runCode(mockData);\n\n// Verify that the variable returns a result.\nassertThat(variableResult).isEqualTo(expected);"
+setup: |-
+  const mockData = {
+    appId: 'appId',
+    platform: 'custom',
+    customPlatform: 'testPlatform',
+    respectDoNotTrack: false,
+    stateStorageStrategy: 'cookieAndLocalStorage',
+    cookieDomain: 'auto',
+    cookieName: 'sp',
+    cookieLifetime: 'custom',
+    customCookieLifetime: '123',
+    cookieSameSite: 'noSameSite',
+    cookieSecure: true,
+    sessionCookieTimeout: '123',
+    maxLocalStorageQueueTime: '123',
+    eventMethod: 'post',
+    encodeBase64: false,
+    pageUnloadTimer: '123',
+    forceProtocol: 'http',
+    bufferSize: '123',
+    postPath: 'postPath',
+    maxPostBytes: '123',
+    webPage: true,
+    geolocation: true
+  };
 
 
 ___NOTES___
