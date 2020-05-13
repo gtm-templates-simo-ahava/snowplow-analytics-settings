@@ -11,6 +11,7 @@ ___INFO___
 {
   "displayName": "Snowplow Analytics Settings",
   "description": "The Snowplow Analytics Settings variable can be used to easily apply a set of tracker configuration parameters to tags created with the Snowplow Analytics tag template.",
+  "__wm": "VGVtcGxhdGUtQXV0aG9yX1Nub3dwbG93QW5hbHl0aWNzU2V0dGluZ3MtU2ltby1BaGF2YQ==",
   "securityGroups": [],
   "categories": [
     "ANALYTICS"
